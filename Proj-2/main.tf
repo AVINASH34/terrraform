@@ -53,3 +53,16 @@ resource "aws_subnet" "subnet6" {
        Name = "subnet6-from-tf"
     }
 }
+
+data "aws_vpc" "to_get_vpc_id" {
+    filter {
+      name = "is-default"
+      values = ["false"]
+    }
+    depends_on = [ aws_vpc.my_vpc ]
+  
+}
+
+output "vpc-id" {
+   value = data.aws_vpc.to_get_vpc_id.id
+}
